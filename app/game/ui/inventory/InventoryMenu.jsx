@@ -24,20 +24,34 @@ InventoryMenu.prototype.create = function () {
 
 InventoryMenu.prototype.toggleInventoryMenu = function () {
     if (this.closed) {
-        const menu = this.game.add.sprite(
-            GameProperties.screenWidth / 2,
+        const backpack = this.game.add.sprite(
+            200,
             GameProperties.screenHeight / 2,
             'block'
         );
 
-        menu.width = 300;
-        menu.height = 100;
+        backpack.width = 250;
+        backpack.height = 400;
 
-        menu.anchor.setTo(0.5, 0.5);
-        this.menu = menu;
+        backpack.anchor.setTo(0.5, 0.5);
+        this.backpack = backpack;
+
+        const characterSheet = this.game.add.sprite(
+            GameProperties.screenWidth - 150,
+            GameProperties.screenHeight / 2,
+            'block'
+        );
+
+        characterSheet.width = 200;
+        characterSheet.height = 400;
+
+        characterSheet.anchor.setTo(0.5, 0.5);
+        this.characterSheet = characterSheet;
+
         this.closed = false;
     } else {
-        this.menu.destroy();
+        this.backpack.destroy();
+        this.characterSheet.destroy();
         this.closed = true;
     }
     console.log("Inv: " + this.closed);

@@ -26,7 +26,7 @@ export class Preloader extends Phaser.State {
         this.loadGameStates();
         // this.state.start(GameProperties.states.picrossBoard);
         //this.state.start(GameProperties.states.world);
-        this.state.start(GameProperties.states.mainMenu);
+        this.state.start(GameProperties.states.beginState);
     }
 }
 

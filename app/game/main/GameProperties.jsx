@@ -17,7 +17,7 @@ const GameProperties = {
         picrossBoard: 'picross-board',
         world: 'world',
         mainMenu: 'main-menu',
-        beginState: 'main-menu', // for testing
+        beginState: 'world', // for testing
         mainMenuStart: 'world', // where does the main menu start option go
         mainMenuOptions: '',  // where does the main menu start option go
     },
