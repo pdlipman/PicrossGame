@@ -17,10 +17,18 @@ const GameProperties = {
         picrossBoard: 'picross-board',
         world: 'world',
         mainMenu: 'main-menu',
-        beginState: 'world', // for testing
+        beginState: 'main-menu', // for testing
         mainMenuStart: 'world', // where does the main menu start option go
         mainMenuOptions: '',  // where does the main menu start option go
     },
+    board: {
+        currentCorrectAnswer: 0,
+        currentCorrectEmpty: 0,
+        currentWrong: 0,
+        correctAnswer: 0,
+        correctEmpty: 0,
+        win: false,
+    }
 };
 
 module.exports = GameProperties;
