@@ -1,8 +1,10 @@
 const Tile = require('./Tile.jsx');
+const GameProperties = require('../main/GameProperties.jsx');
 
 function Board(columns, rows, answerKey, game) {
     const board = [];
-    const group = game.add.group();
+    this.game = game;
+    this.group = game.add.group();
     this.hintsX = [];
     this.hintsY = [];
 
@@ -10,11 +12,13 @@ function Board(columns, rows, answerKey, game) {
     this.boardWidth = answerKey[0].length;
     this.boardHeight = answerKey.length;
 
+
+
     for (let y = 0; y < this.boardHeight; y++) {
         const row = [];
 
         for (let x = 0; x < this.boardWidth; x++) {
-            const tile = new Tile(x, y, group, game, rows, (answerKey[y][x] === '1'));
+            const tile = new Tile(x, y, this.group, game, rows, (answerKey[y][x] === '1'));
             row.push(tile);
         }
 
@@ -62,8 +66,8 @@ function Board(columns, rows, answerKey, game) {
         }
 
         this.moveTo = function (x, y) {
-            group.x = x;
-            group.y = y;
+            this.group.x = x;
+            this.group.y = y;
             //group.align(this.boardWidth, -1, 4, 4);
             this.showHints(x, y);
         };
@@ -109,15 +113,90 @@ function Board(columns, rows, answerKey, game) {
                 text.anchor.setTo(0.5, 1);
 
             }
+        }
+    }
+}
 
+Board.prototype.update = function() {
+    const game = this.game;
+    this.group.children.forEach(function(tile){
+        tile.unSelect();
+    });
+    let selectedTiles = [];
+    if (GameProperties.tiles.targetTile !== null && game.input.activePointer.leftButton.isDown) {
+
+        const dx = Math.abs(GameProperties.board.pointerStartLocationX - game.input.activePointer.x);
+        const dy = Math.abs(GameProperties.board.pointerStartLocationY - game.input.activePointer.y);
+
+        if (dx > 16 || dy > 16) {
+            GameProperties.board.dragEvent = true;
+        }
+
+        if (dy > dx) {
+
+            this.group.children.filter(
+                function (tile) {
+                    return (!tile.clicked && (
+                        (tile.world.x === GameProperties.tiles.targetTile.world.x
+                        &&
+                        (tile.world.y + GameProperties.tiles.tileHeight <= game.input.activePointer.y
+                        && tile.world.y >= GameProperties.tiles.targetTile.world.y))
+                        ||
+                        (tile.world.x === GameProperties.tiles.targetTile.world.x
+                        &&
+                        (tile.world.y >= game.input.activePointer.y
+                        && tile.world.y <= GameProperties.tiles.targetTile.world.y)))
+                    );
+                    //&& tile.startingY <= GameProperties.tiles.targetTile.startingY
+                    //&& game.input.activePointer.y > GameProperties.tiles.targetTile.startingY)
+
+                    //)
+                }
+            ).forEach(function (tile) {
+                selectedTiles.push(tile);
+                tile.dragSelected();
+            });
+        } else {
+            this.group.children.filter(
+                function (tile) {
+                    return (!tile.clicked && (
+                        (tile.world.y === GameProperties.tiles.targetTile.world.y
+                        &&
+                        (tile.world.x + GameProperties.tiles.tileWidth <= game.input.activePointer.x
+                        && tile.world.x >= GameProperties.tiles.targetTile.world.x))
+                        ||
+                        (tile.world.y === GameProperties.tiles.targetTile.world.y
+                        &&
+                        (tile.world.x >= game.input.activePointer.x
+                        && tile.world.x <= GameProperties.tiles.targetTile.world.x)))
+                    );
+                    //&& tile.startingY <= GameProperties.tiles.targetTile.startingY
+                    //&& game.input.activePointer.y > GameProperties.tiles.targetTile.startingY)
+
+                    //)
+                }
+            ).forEach(function (tile) {
+                selectedTiles.push(tile);
+                tile.dragSelected();
+            });
+        }
+        GameProperties.board.selectedTiles = selectedTiles;
+    }
+
+    if (GameProperties.tiles.targetTile === null) {
+        if (GameProperties.board.selectedTiles != null) {
+            GameProperties.board.selectedTiles.forEach(function (tile) {
+                tile.answerSelected();
+            });
+            GameProperties.board.selectedTiles = null;
 
         }
 
+        this.group.children.forEach(function(tile) {
+            tile.unSelect();
+        });
     }
-
-    console.log(this.hintsX);
-    console.log(this.hintsY);
-
-}
+    //console.log(arrTest);
+};
 
 module.exports = Board;

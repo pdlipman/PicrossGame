@@ -3,6 +3,7 @@ const GameProperties = {
     screenHeight: 480,
 
     tiles: {
+        targetTile: null,
         tileWidth: 32,
         tileHeight: 32,
 
@@ -32,6 +33,10 @@ const GameProperties = {
         correctAnswer: 0,
         correctEmpty: 0,
         win: false,
+        pointerStartLocationX: 0,
+        pointerStartLocationY: 0,
+        selectedTiles: [],
+        dragEvent: false,
     }
 };
 

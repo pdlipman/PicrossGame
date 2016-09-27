@@ -31,6 +31,8 @@ export class PicrossBoard extends Phaser.State {
             GameProperties.board.win = true;
             console.log('YOU WiN!');
         }
+
+        this.board.update();
     }
 
     render() {
@@ -72,7 +74,7 @@ export class PicrossBoard extends Phaser.State {
         const key = Math.floor(Math.random() * answerKeyCsv.length);
 
 
-        this.answerKey = this.csvToArray(answerKeyCsv[1]);
+        this.answerKey = this.csvToArray(answerKeyCsv[key]);
 
         GameProperties.board.correctAnswer = (answerKeyCsv[key].match(/1/g) || []).length;
         GameProperties.board.correctEmpty = (answerKeyCsv[key].match(/0/g) || []).length;
