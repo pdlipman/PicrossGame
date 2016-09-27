@@ -7,6 +7,9 @@ const InventoryMenu = require('../ui/inventory/InventoryMenu.jsx');
 
 export class World extends Phaser.State {
     preload() {
+
+        this.game.load.tilemap('level1', 'static/game-assets/maps/testmap.json', null, Phaser.Tilemap.TILED_JSON);
+        this.game.load.image('tiles', 'static/game-assets/maps/dungeon_sheet.png');
     }
 
     create() {
@@ -52,6 +55,13 @@ export class World extends Phaser.State {
         this.clearKey.onDown.add(this.clearProps, this);
 
         this.escapeKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
+
+
+        const map = this.game.add.tilemap('level1');
+        map.addTilesetImage('dungeon_sheet', 'tiles');
+
+        const layer = map.createLayer('Collision');
+        layer.resizeWorld();
     }
 
     clearProps() {
@@ -66,7 +76,7 @@ export class World extends Phaser.State {
 
         const testEnemy = this.testEnemy;
 
-        const angle = Phaser.Math.radToDeg(this.physics.arcade.angleToPointer(player));
+        // const angle = Phaser.Math.radToDeg(this.physics.arcade.angleToPointer(player));
 
         player.body.velocity.x = 0;
 

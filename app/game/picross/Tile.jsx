@@ -4,14 +4,14 @@ export class Tile extends Phaser.Sprite {
     constructor(column, row, group, game, totalRows, answer) {
         super(game, 0, 0, 'block', 0);
 
-        const padding = 4;
+        const padding = GameProperties.tiles.tilePadding;
         this.movementDistance = 3;
         this.movementSpeed = 100;
         this.column = column;
         this.row = row;
         this.totalRows = totalRows;
-        this.startingX = (column * GameProperties.tileWidth) + (column * padding);
-        this.startingY = (row * GameProperties.tileHeight) + (row * padding);
+        this.startingX = (column * GameProperties.tiles.tileWidth) + (column * padding);
+        this.startingY = (row * GameProperties.tiles.tileHeight) + (row * padding);
         this.position.setTo(this.startingX, -400);
         this.answer = answer;
         this.clicked = false;
@@ -52,7 +52,7 @@ Tile.prototype.click = function() {
             if (!this.clicked) {
                 this.clicked = true;
                 GameProperties.board.currentCorrectAnswer++;
-                //console.log(GameProperties.board.currentCorrectAnswer);
+                console.log(GameProperties.board.currentCorrectAnswer);
             }
             this.tint = 0x00ff00;
         } else {
@@ -88,7 +88,7 @@ Tile.prototype.rollOver = function() {
             if (!this.clicked) {
                 this.clicked = true;
                 GameProperties.board.currentCorrectAnswer++;
-                //console.log(GameProperties.board.currentCorrectAnswer);
+                console.log(GameProperties.board.currentCorrectAnswer);
             }
             this.tint = 0x00ff00;
 

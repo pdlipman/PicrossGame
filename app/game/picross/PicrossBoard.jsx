@@ -3,15 +3,15 @@ const Board = require('./Board.jsx');
 
 export class PicrossBoard extends Phaser.State {
     init() {
-        this.boardWidth = 5;
-        this.boardHeight = 5;
+        this.initializeAnswerKey();
+
+        this.boardWidth = this.answerKey[0].length;
+        this.boardHeight = this.answerKey.length;
 
         this.boardLeft =
-            (GameProperties.screenWidth - (GameProperties.tileWidth * this.boardWidth)) * 0.5;
+            (GameProperties.screenWidth - (GameProperties.tiles.tileWidth * this.boardWidth)) * 0.5;
         this.boardTop =
-            (GameProperties.screenHeight - (GameProperties.tileHeight * this.boardHeight)) * 0.5;
-
-        this.initializeAnswerKey();
+            (GameProperties.screenHeight - (GameProperties.tiles.tileHeight * this.boardHeight)) * 0.5;
     }
 
     preload() {
@@ -20,6 +20,7 @@ export class PicrossBoard extends Phaser.State {
     create() {
         this.board = new Board(this.boardWidth, this.boardHeight, this.answerKey, this.game);
         this.board.moveTo(this.boardLeft, this.boardTop);
+        //this.board.showHints(this.boardLeft, this.boardTop);
         this.exitKey = this.game.input.keyboard.addKey(Phaser.Keyboard.E);
         this.exitKey.onDown.add(this.exitState, this);
     }
@@ -34,6 +35,7 @@ export class PicrossBoard extends Phaser.State {
 
     render() {
         this.game.debug.inputInfo(32, 32);
+
     }
 
     exitState() {
@@ -42,16 +44,38 @@ export class PicrossBoard extends Phaser.State {
     }
 
     initializeAnswerKey() {
-        const answerKeyCsv = '1,1,1,1,1\n'
-            + '1,0,1,0,1\n'
-            + '1,1,1,1,1\n'
-            + '0,1,1,1,0\n'
-            + '0,1,0,1,0';
 
-        this.answerKey = this.csvToArray(answerKeyCsv);
+        const answerKeyCsv = [
+              '1,1,1,1,1\n' +
+              '1,0,1,0,1\n' +
+              '1,1,1,1,1\n' +
+              '0,1,1,1,0\n' +
+              '0,1,0,1,0'
+        ];
 
-        GameProperties.board.correctAnswer = (answerKeyCsv.match(/1/g) || []).length;
-        GameProperties.board.correctEmpty = (answerKeyCsv.match(/0/g) || []).length;
+        answerKeyCsv.push(
+            '1,0,1,0,1\n' +
+            '0,1,1,1,0\n' +
+            '1,1,0,1,1\n' +
+            '0,1,1,1,0\n' +
+            '1,0,1,0,1'
+        );
+
+        answerKeyCsv.push(
+            '1,1,1,1,1\n' +
+            '0,1,0,1,0\n' +
+            '0,0,1,0,0\n' +
+            '0,1,1,1,0\n' +
+            '1,1,1,1,1'
+        );
+
+        const key = Math.floor(Math.random() * answerKeyCsv.length);
+
+
+        this.answerKey = this.csvToArray(answerKeyCsv[1]);
+
+        GameProperties.board.correctAnswer = (answerKeyCsv[key].match(/1/g) || []).length;
+        GameProperties.board.correctEmpty = (answerKeyCsv[key].match(/0/g) || []).length;
         GameProperties.board.currentCorrectAnswer = 0;
         GameProperties.board.currentCorrectEmpty = 0;
         GameProperties.board.win = false;
