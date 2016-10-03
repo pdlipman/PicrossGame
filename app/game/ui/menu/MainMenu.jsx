@@ -1,10 +1,10 @@
-const GameProperties = require('../../main/GameProperties.jsx');
+import GameProperties from '../../main/GameProperties.jsx';
 
 /**
  * Main Menu
  * @class MainMenu
  */
-export class MainMenu {}
+export default class MainMenu {}
 
 /**
  * @memberof MainMenu
@@ -30,10 +30,10 @@ MainMenu.prototype = {
             this.state.start(GameProperties.states.mainMenuStart);
         });
         this.addMenuItem('Options', () => {
-            console.log('You clicked Options!');
+            console.log('You clicked Options!'); // eslint-disable-line no-console
         });
         this.addMenuItem('Quit', () => {
-            console.log('You clicked Quit!');
+            console.log('You clicked Quit!'); // eslint-disable-line no-console
         });
     },
 

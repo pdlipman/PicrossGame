@@ -6,8 +6,7 @@ const GameProperties = {
         targetTile: null,
         tileWidth: 32,
         tileHeight: 32,
-
-        tilePadding: 4
+        tilePadding: 4,
     },
     playerProps:
     {
@@ -37,7 +36,7 @@ const GameProperties = {
         pointerStartLocationY: 0,
         selectedTiles: [],
         dragEvent: false,
-    }
+    },
 };
 
 module.exports = GameProperties;

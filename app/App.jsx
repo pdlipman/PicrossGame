@@ -1,7 +1,7 @@
-const React = require('react');
-const ReactDom = require('react-dom');
+import React from 'react';
+import ReactDom from 'react-dom';
 
-const GameComponent = require('./game/GameComponent.jsx');
+import GameComponent from './game/GameComponent.jsx';
 
 /**
  * App Class
@@ -31,10 +31,7 @@ export default class App extends React.Component {
     render() {
         return (
             <div>
-                <GameComponent
-                    width={640}
-                    height={480}
-                />
+                <GameComponent />
             </div>
         );
     }
@@ -48,4 +45,7 @@ App.defaultProps = {
     title: 'Hello, World!',
 };
 
-ReactDom.render((<App />), document.getElementById('react-app'));
+ReactDom.render(
+    (<App />),
+    document.getElementById('react-app')
+);

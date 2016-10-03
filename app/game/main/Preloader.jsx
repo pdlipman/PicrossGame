@@ -1,10 +1,10 @@
-const GameProperties = require('../main/GameProperties.jsx');
+import GameProperties from '../main/GameProperties.jsx';
 
-const MainMenu = require('../ui/menu/MainMenu.jsx');
-const PicrossBoard = require('../picross/PicrossBoard.jsx');
-const World = require('../world/World.jsx');
+import MainMenu from '../ui/menu/MainMenu.jsx';
+import PicrossBoard from '../picross/PicrossBoard.jsx';
+import World from '../world/World.jsx';
 
-export class Preloader extends Phaser.State {
+export default class Preloader extends Phaser.State { // eslint-disable-line no-undef
     loadGameStates() {
         this.state.add(GameProperties.states.mainMenu, MainMenu);
         this.state.add(GameProperties.states.picrossBoard, PicrossBoard);
@@ -24,8 +24,6 @@ export class Preloader extends Phaser.State {
 
     create() {
         this.loadGameStates();
-        // this.state.start(GameProperties.states.picrossBoard);
-        //this.state.start(GameProperties.states.world);
         this.state.start(GameProperties.states.beginState);
     }
 }

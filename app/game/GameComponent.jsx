@@ -1,10 +1,8 @@
-const React = require('react');
-const Boot = require('./main/Boot.jsx');
+import React from 'react';
+import Boot from './main/Boot.jsx';
 
-const GameProperties = require('./main/GameProperties.jsx');
-const PlayerProperties = require('./main/PlayerProperties.jsx');
+import GameProperties from './main/GameProperties.jsx';
 
-const Player = require('./world/Player.jsx');
 /**
  * Game
  */
@@ -34,7 +32,11 @@ export default class GameComponent extends React.Component {
     }
 
     createGame(width, height) {
-        const game = new Phaser.Game(width, height, Phaser.AUTO, this.props.appDivId); // eslint-disable-line no-undef
+        const game =
+            new Phaser.Game(width, // eslint-disable-line no-undef
+                height,
+                Phaser.AUTO, // eslint-disable-line no-undef
+                this.props.appDivId);
 
         game.state.add(GameProperties.states.boot, Boot);
         game.state.start(GameProperties.states.boot);

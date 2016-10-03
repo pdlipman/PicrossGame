@@ -1,4 +1,4 @@
-export class Enemy extends Phaser.Sprite {
+export default class Enemy extends Phaser.Sprite { // eslint-disable-line no-undef
 
     constructor(game, x, y) {
         super(game, x, y, 'block');
@@ -11,12 +11,9 @@ export class Enemy extends Phaser.Sprite {
         this.body.collidWorldBounds = true;
         this.anchor.setTo(0.5, 0.5);
         game.add.existing(this);
-
     }
 
-    update() {
-
-    }
+    update() { }
 
 }
 

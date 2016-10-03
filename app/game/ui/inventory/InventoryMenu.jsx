@@ -1,14 +1,14 @@
-const GameProperties = require('../../main/GameProperties.jsx');
+import GameProperties from '../../main/GameProperties.jsx';
 
 
-export class InventoryMenu {
+export default class InventoryMenu {
     constructor(game) {
         this.game = game;
         this.closed = true;
     }
 }
 
-InventoryMenu.prototype.create = function () {
+InventoryMenu.prototype.create = function create() {
     const INVENTORY_STRING = 'Inventory';
     const inventoryLabel = this.game.add.text(
         GameProperties.screenWidth - 100,
@@ -22,7 +22,7 @@ InventoryMenu.prototype.create = function () {
     inventoryLabel.events.onInputUp.add(this.toggleInventoryMenu, this);
 };
 
-InventoryMenu.prototype.toggleInventoryMenu = function () {
+InventoryMenu.prototype.toggleInventoryMenu = function toggleInventoryMenu() {
     if (this.closed) {
         const backpack = this.game.add.sprite(
             200,
@@ -54,8 +54,6 @@ InventoryMenu.prototype.toggleInventoryMenu = function () {
         this.characterSheet.destroy();
         this.closed = true;
     }
-    console.log("Inv: " + this.closed);
-
 };
 
 module.exports = InventoryMenu;

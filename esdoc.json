@@ -1,6 +1,6 @@
 {
   "source": "app",
-  "excludes": ["__tests__"],
+  "excludes": ["__tests__", "test"],
   "destination": "./dist/esdoc",
   "includes": ["\\.(js|jsx)$"]
 }

@@ -1,6 +1,6 @@
-const GameProperties = require('../main/GameProperties.jsx');
+import GameProperties from '../main/GameProperties.jsx';
 
-export class Tile extends Phaser.Sprite {
+export default class Tile extends Phaser.Sprite { // eslint-disable-line no-undef
     constructor(column, row, group, game, totalRows, answer) {
         super(game, 0, 0, 'block', 0);
 
@@ -19,7 +19,7 @@ export class Tile extends Phaser.Sprite {
         this.events.onInputOut.add(this.rollOut, this);
         this.events.onInputOver.add(this.rollOver, this);
         this.events.onInputDown.add(this.click, this);
-        this.events.onInputUp.add(this.inputUp, this)
+        this.events.onInputUp.add(this.inputUp, this);
 
         group.add(this);
 
@@ -29,39 +29,31 @@ export class Tile extends Phaser.Sprite {
     }
 }
 
-Tile.prototype.inputUp = function() {
-
-    //const dx = Math.abs(GameProperties.board.pointerStartLocationX - this.game.input.activePointer.x);
-    //const dy = Math.abs(GameProperties.board.pointerStartLocationY - this.game.input.activePointer.y);
-    //if (dy > 32 || dx > 32) {
-    //
-    //}
+Tile.prototype.inputUp = function inputUp() {
     if (!GameProperties.board.dragEvent) {
         this.answerSelected();
     }
     GameProperties.tiles.targetTile = null;
     GameProperties.board.dragEvent = false;
-    //this.tint = 0xffffff;
-
 };
 
-Tile.prototype.dragSelected = function() {
+Tile.prototype.dragSelected = function dragSelected() {
     this.tint = 0xd3d3d3;
 };
 
-Tile.prototype.unSelect = function() {
-    if(!this.clicked) {
+Tile.prototype.unSelect = function unSelect() {
+    if (!this.clicked) {
         this.tint = 0xffffff;
     }
 };
 
 
-Tile.prototype.initializeControls = function() {
+Tile.prototype.initializeControls = function initializeControls() {
     this.inputEnabled = true;
     this.input.useHandCursor = true;
 };
 
-Tile.prototype.loadTiles = function() {
+Tile.prototype.loadTiles = function loadTiles() {
     const tween = this.game.add.tween(this);
     tween.to(
         {
@@ -74,10 +66,10 @@ Tile.prototype.loadTiles = function() {
     tween.start();
 };
 
-Tile.prototype.answerSelected = function() {
+Tile.prototype.answerSelected = function answerSelected() {
     if (this.answer) {
         if (!this.clicked) {
-            GameProperties.board.currentCorrectAnswer++;
+            GameProperties.board.currentCorrectAnswer += 1;
         }
         this.tint = 0x00ff00;
     } else {
@@ -85,24 +77,13 @@ Tile.prototype.answerSelected = function() {
     }
 
     this.clicked = true;
-
 };
 
-Tile.prototype.click = function() {
-    console.log('click');
+Tile.prototype.click = function click() {
     if (this.game.input.activePointer.leftButton.isDown) {
         GameProperties.tiles.targetTile = this;
         GameProperties.board.pointerStartLocationX = this.game.input.activePointer.x;
         GameProperties.board.pointerStartLocationY = this.game.input.activePointer.y;
-        //if (this.answer) {
-        //    if (!this.clicked) {
-        //        this.clicked = true;
-        //        GameProperties.board.currentCorrectAnswer++;
-        //    }
-        //    //this.tint = 0x00ff00;
-        //} else {
-        //    //this.tint = 0xff0000;
-        //}
     }
 
     if (this.game.input.activePointer.middleButton.isDown) {
@@ -116,38 +97,19 @@ Tile.prototype.click = function() {
     }
 };
 
-Tile.prototype.rollOver = function() {
-    console.log('over');
-
-    if (this.game.input.activePointer.leftButton.isDown
-        && GameProperties.tiles.targetTile != null
-        && (this.world.x === GameProperties.tiles.targetTile.world.x)) {
-        // console.log('left');
-        //if(this.answer) {
-        //    if (!this.clicked) {
-        //        this.clicked = true;
-        //        GameProperties.board.currentCorrectAnswer++;
-        //        console.log(GameProperties.board.currentCorrectAnswer);
-        //    }
-        //    //this.tint = 0x00ff00;
-        //
-        //} else {
-        //    //this.tint = 0xff0000;
-        //}
-    }
+Tile.prototype.rollOver = function rollOver() {
     const tween = this.game.add.tween(this);
-        tween.to(
-            {
-                x: this.startingX - this.movementDistance,
-                y: this.startingY - this.movementDistance,
-            },
-            this.movementSpeed,
-            Phaser.Easing.Exponential.easeOut); // eslint-disable-line no-undef
-        tween.start();
-
+    tween.to(
+        {
+            x: this.startingX - this.movementDistance,
+            y: this.startingY - this.movementDistance,
+        },
+        this.movementSpeed,
+        Phaser.Easing.Exponential.easeOut); // eslint-disable-line no-undef
+    tween.start();
 };
 
-Tile.prototype.rollOut = function() {
+Tile.prototype.rollOut = function rollOut() {
     const tween = this.game.add.tween(this);
     tween.to(
         {

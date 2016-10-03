@@ -1,7 +1,7 @@
-const GameProperties = require('../main/GameProperties.jsx');
-const Preloader = require('./Preloader.jsx');
+import GameProperties from '../main/GameProperties.jsx';
+import Preloader from './Preloader.jsx';
 
-export class Boot extends Phaser.State {
+export default class Boot extends Phaser.State { // eslint-disable-line no-undef
     create() {
         this.game.canvas.oncontextmenu = (e) => { e.preventDefault(); };
         this.state.add(GameProperties.states.preloader, Preloader);
